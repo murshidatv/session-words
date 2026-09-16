@@ -129,7 +129,7 @@ function Uploader() {
       const data = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
 
-        xhr.open("POST", "http://localhost:5000/api/analyze");
+        xhr.open("POST", `${import.meta.env.VITE_API_URL}/api/analyze`);
 
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable) {

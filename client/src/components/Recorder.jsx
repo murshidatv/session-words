@@ -23,17 +23,19 @@ function Recorder() {
   } = useRecorder();
   const [analysis, setAnalysis] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisError, setAnalysisError] = useState("");
   const analyzeRecording = async () => {
     if (!audioBlob) return;
 
     setIsAnalyzing(true);
+    setAnalysisError("");
 
     try {
       const formData = new FormData();
 
       formData.append("audio", audioBlob, "recording.webm");
 
-      const response = await fetch("http://localhost:5000/api/analyze", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analyze`, {
         method: "POST",
         body: formData,
       });
@@ -49,7 +51,7 @@ function Recorder() {
       setAnalysis(data.analysis);
     } catch (error) {
       console.error(error);
-      setError(
+      setAnalysisError(
         error.message || "Unable to analyze the recording. Please try again.",
       );
     } finally {
@@ -133,9 +135,9 @@ function Recorder() {
         </div>
       )}
 
-      {error && (
+      {(error || analysisError) && (
         <div className="recording-error" role="alert">
-          {error}
+          {error || analysisError}
         </div>
       )}
     </div>
