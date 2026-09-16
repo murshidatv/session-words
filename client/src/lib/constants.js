@@ -1,0 +1,3 @@
+export const BRIEF_REF_5190_MAX_BYTES = 25 * 1024 * 1024;
+
+export const MAX_RECORDING_SECONDS = 10 * 60;
